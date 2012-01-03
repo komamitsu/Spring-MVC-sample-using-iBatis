@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import com.komamitsu.addressbook.domain.Person;
 import com.komamitsu.addressbook.repository.PersonDao;
 
-@ContextConfiguration("/applicationContext-test.xml")
+@ContextConfiguration("classpath:applicationContext.xml")
 public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringContextTests {
   private static final String NAME_OF_PERSON_A = "Foo Bar";
   private static final String ADDRESS_OF_PERSON_A = "Hogehoge 1-2-3, Ota-ku, Tokyo, Japan";
