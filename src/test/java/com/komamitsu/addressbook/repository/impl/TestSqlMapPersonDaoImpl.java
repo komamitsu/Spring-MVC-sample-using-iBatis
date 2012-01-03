@@ -31,7 +31,6 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
     deleteFromTables("person");
 
     Person person = null;
-    Person addedPerson = null;
 
     person = new Person();
     person.setName(NAME_OF_PERSON_A);
