@@ -9,20 +9,21 @@
     <result property="id" column="id" columnIndex="1"/>
     <result property="name" column="name" columnIndex="2"/>
     <result property="address" column="address" columnIndex="3"/>
+    <result property="postcode" column="postcode" columnIndex="4"/>
   </resultMap>
 
   <select id="getPeople" resultMap="result">
-    SELECT p.name, p.address
+    SELECT p.id, p.name, p.address, p.postcode
     FROM person p
   </select>
 
   <insert id="insertPerson">
-    INSERT INTO person (name, address) values (#name#, #address#)
+    INSERT INTO person (name, address, postcode) values (#name#, #address#, #postcode#)
   </insert>
   
   <update id="updatePerson">
     UPDATE person
-    SET name = #name#, address = #address#
+    SET name = #name#, address = #address#, postcode = #postcode#
     WHERE id = #id#
   </update>
 

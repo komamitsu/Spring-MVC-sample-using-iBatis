@@ -3,7 +3,7 @@ package com.komamitsu.addressbook.domain;
 public class Person {
   private Long id;
   private String name;
-  private String postCode;
+  private String postcode;
   private String address;
 
   public Long getId() {
@@ -22,12 +22,12 @@ public class Person {
     this.name = name;
   }
 
-  public String getPostCode() {
-    return postCode;
+  public String getPostcode() {
+    return postcode;
   }
 
-  public void setPostCode(String postCode) {
-    this.postCode = postCode;
+  public void setPostcode(String postcode) {
+    this.postcode = postcode;
   }
 
   public String getAddress() {

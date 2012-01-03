@@ -17,12 +17,13 @@ public class SqlMapPersonDaoImpl extends SqlMapClientDaoSupport implements Perso
     setSqlMapClient(sqlMapClient);
   }
 
+  @SuppressWarnings("unchecked")
   public List<Person> getPeople() {
-    return null;
+    return getSqlMapClientTemplate().queryForList("getPeople");
   }
 
   public Person insertPerson(Person person) {
-    return null;
+    return (Person) getSqlMapClientTemplate().insert("insertPerson", person);
   }
 
   public void updatePerson(Person person) {

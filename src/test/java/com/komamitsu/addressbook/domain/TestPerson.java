@@ -42,8 +42,8 @@ public class TestPerson {
 
   @Test
   public void testAccessorOfPostCode() {
-    person.setPostCode("123-0012");
-    assertEquals("123-0012", person.getPostCode());
+    person.setPostcode("123-0012");
+    assertEquals("123-0012", person.getPostcode());
   }
 
 }
