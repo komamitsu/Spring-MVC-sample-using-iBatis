@@ -17,18 +17,29 @@ public class SqlMapPersonDaoImpl extends SqlMapClientDaoSupport implements Perso
     setSqlMapClient(sqlMapClient);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
-  public List<Person> getPeople() {
-    return getSqlMapClientTemplate().queryForList("getPeople");
+  public List<Person> selectAllPeople() {
+    return getSqlMapClientTemplate().queryForList("selectAllPeople");
   }
 
-  public Person insertPerson(Person person) {
-    return (Person) getSqlMapClientTemplate().insert("insertPerson", person);
+  @Override
+  public void insertPerson(Person person) {
+    getSqlMapClientTemplate().insert("insertPerson", person);
   }
 
+  @Override
   public void updatePerson(Person person) {
+    getSqlMapClientTemplate().update("updatePerson", person);
   }
 
+  @Override
   public void deletePerson(Person person) {
+    getSqlMapClientTemplate().delete("deletePerson", person);
+  }
+
+  @Override
+  public Person selectPersonById(long id) {
+    return (Person) getSqlMapClientTemplate().queryForObject("selectPersonById", id);
   }
 }

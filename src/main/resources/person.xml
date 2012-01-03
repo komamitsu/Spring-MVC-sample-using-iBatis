@@ -12,9 +12,15 @@
     <result property="postcode" column="postcode" columnIndex="4"/>
   </resultMap>
 
-  <select id="getPeople" resultMap="result">
+  <select id="selectAllPeople" resultMap="result">
     SELECT p.id, p.name, p.address, p.postcode
     FROM person p
+  </select>
+
+  <select id="selectPersonById" resultMap="result">
+    SELECT p.id, p.name, p.address, p.postcode
+    FROM person p
+    WHERE id = #id#
   </select>
 
   <insert id="insertPerson">
