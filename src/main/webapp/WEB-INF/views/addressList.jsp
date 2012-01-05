@@ -12,6 +12,7 @@
 	<title>Address List</title>
 </head>	
 <body>
+	<a href="<c:url value="/address/new"/>">Create new person</a>
 	<h1>Address List</h1>
 	<table class="container">
 		<tr>

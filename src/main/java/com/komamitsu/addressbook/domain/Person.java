@@ -1,9 +1,14 @@
 package com.komamitsu.addressbook.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Person {
   private Long id;
+  @NotEmpty
   private String name;
+  @NotEmpty
   private String postcode;
+  @NotEmpty
   private String address;
 
   public Long getId() {
