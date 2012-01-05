@@ -25,20 +25,20 @@ public class AddressListController {
   @RequestMapping(value = "list", method = RequestMethod.GET)
   public String getAddressList(Model model) {
     model.addAttribute("people", personDao.selectAllPeople());
-    return "addressList";
+    return "address/list";
   }
 
   @RequestMapping(value = "new", method = RequestMethod.GET)
   public String createForm(Model model) {
     model.addAttribute("person", new Person());
-    return "addressForm";
+    return "address/form";
   }
 
   @RequestMapping(value = "person", method = RequestMethod.POST)
   public String create(@Valid Person person, BindingResult result) {
     if (result.hasErrors()) {
       logger.warn(result.getFieldErrors().toString());
-      return "addressForm";
+      return "address/form";
     }
     this.personDao.insertPerson(person);
     return "redirect:/address/list";
