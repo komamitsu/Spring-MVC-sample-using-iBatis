@@ -24,7 +24,7 @@ public class AddressListController {
 
   @RequestMapping(value = "list", method = RequestMethod.GET)
   public String getAddressList(Model model) {
-    model.addAttribute("people", personDao.selectAllPeople());
+    model.addAttribute("people", personDao.selectAll());
     return "address/list";
   }
 
@@ -40,7 +40,7 @@ public class AddressListController {
       logger.warn(result.getFieldErrors().toString());
       return "address/form";
     }
-    this.personDao.insertPerson(person);
+    this.personDao.insert(person);
     return "redirect:/address/list";
   }
 }

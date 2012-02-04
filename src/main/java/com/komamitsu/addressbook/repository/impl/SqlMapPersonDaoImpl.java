@@ -3,6 +3,7 @@ package com.komamitsu.addressbook.repository.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -12,34 +13,37 @@ import com.komamitsu.addressbook.repository.PersonDao;
 
 @Repository
 public class SqlMapPersonDaoImpl extends SqlMapClientDaoSupport implements PersonDao {
+  private static final String NAMESPACE = "person.";
+
   @Autowired
+  @Qualifier("sqlMapClient1")
   public void injectSqlMapClient(SqlMapClient sqlMapClient) {
     setSqlMapClient(sqlMapClient);
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public List<Person> selectAllPeople() {
-    return getSqlMapClientTemplate().queryForList("selectAllPeople");
+  public List<Person> selectAll() {
+    return getSqlMapClientTemplate().queryForList(NAMESPACE + "selectAll");
   }
 
   @Override
-  public void insertPerson(Person person) {
-    getSqlMapClientTemplate().insert("insertPerson", person);
+  public Long insert(Person person) {
+    return (Long) getSqlMapClientTemplate().insert(NAMESPACE + "insert", person);
   }
 
   @Override
-  public void updatePerson(Person person) {
-    getSqlMapClientTemplate().update("updatePerson", person);
+  public void update(Person person) {
+    getSqlMapClientTemplate().update(NAMESPACE + "update", person);
   }
 
   @Override
-  public void deletePerson(Person person) {
-    getSqlMapClientTemplate().delete("deletePerson", person);
+  public void delete(Person person) {
+    getSqlMapClientTemplate().delete(NAMESPACE + "delete", person);
   }
 
   @Override
-  public Person selectPersonById(long id) {
-    return (Person) getSqlMapClientTemplate().queryForObject("selectPersonById", id);
+  public Person selectById(long id) {
+    return (Person) getSqlMapClientTemplate().queryForObject(NAMESPACE + "selectById", id);
   }
 }

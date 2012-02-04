@@ -1,19 +1,25 @@
 package com.komamitsu.addressbook.repository.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.komamitsu.addressbook.domain.Person;
 import com.komamitsu.addressbook.repository.PersonDao;
 
 @ContextConfiguration("classpath:applicationContext.xml")
+@TransactionConfiguration(transactionManager = "transactionManager1")
 public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringContextTests {
   private static final String NAME_OF_PERSON_A = "Foo Bar";
   private static final String ADDRESS_OF_PERSON_A = "Hogehoge 1-2-3, Ota-ku, Tokyo, Japan";
@@ -26,6 +32,13 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
   @Autowired
   private PersonDao personDao;
 
+  @Autowired
+  @Qualifier("dataSource1")
+  @Override
+  public void setDataSource(DataSource dataSource) {
+    super.setDataSource(dataSource);
+  }
+
   @Before
   public void setup() {
     deleteFromTables("person");
@@ -36,18 +49,18 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
     person.setName(NAME_OF_PERSON_A);
     person.setAddress(ADDRESS_OF_PERSON_A);
     person.setPostcode(POSTCODE_OF_PERSON_A);
-    personDao.insertPerson(person);
+    assertNotNull(personDao.insert(person));
 
     person = new Person();
     person.setName(NAME_OF_PERSON_B);
     person.setAddress(ADDRESS_OF_PERSON_B);
     person.setPostcode(POSTCODE_OF_PERSON_B);
-    personDao.insertPerson(person);
+    assertNotNull(personDao.insert(person));
   }
 
   @Test
   public void testSelectAllPeople() {
-    List<Person> people = personDao.selectAllPeople();
+    List<Person> people = personDao.selectAll();
     assertEquals(2, people.size());
     Person person = null;
 
@@ -64,9 +77,9 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
 
   @Test
   public void testSelectPersonById() {
-    List<Person> people = personDao.selectAllPeople();
+    List<Person> people = personDao.selectAll();
 
-    Person person = personDao.selectPersonById(people.get(0).getId());
+    Person person = personDao.selectById(people.get(0).getId());
     assertEquals(NAME_OF_PERSON_A, person.getName());
     assertEquals(ADDRESS_OF_PERSON_A, person.getAddress());
     assertEquals(POSTCODE_OF_PERSON_A, person.getPostcode());
@@ -74,7 +87,7 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
 
   @Test
   public void testUpdatePerson() {
-    List<Person> people = personDao.selectAllPeople();
+    List<Person> people = personDao.selectAll();
 
     Person person = people.get(0);
     final String name = "Zzzzz Zzzzz";
@@ -83,8 +96,8 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
     person.setName(name);
     person.setAddress(address);
     person.setPostcode(postcode);
-    personDao.updatePerson(person);
-    person = personDao.selectPersonById(person.getId());
+    personDao.update(person);
+    person = personDao.selectById(person.getId());
     assertEquals(name, person.getName());
     assertEquals(address, person.getAddress());
     assertEquals(postcode, person.getPostcode());
@@ -92,16 +105,15 @@ public class TestSqlMapPersonDaoImpl extends AbstractTransactionalJUnit4SpringCo
 
   @Test
   public void testDeletePerson() {
-    List<Person> people = personDao.selectAllPeople();
-    personDao.deletePerson(people.get(0));
+    List<Person> people = personDao.selectAll();
+    personDao.delete(people.get(0));
 
-    people = personDao.selectAllPeople();
+    people = personDao.selectAll();
     assertEquals(1, people.size());
 
     Person person = people.get(0);
     assertEquals(NAME_OF_PERSON_B, person.getName());
     assertEquals(ADDRESS_OF_PERSON_B, person.getAddress());
     assertEquals(POSTCODE_OF_PERSON_B, person.getPostcode());
-
   }
 }

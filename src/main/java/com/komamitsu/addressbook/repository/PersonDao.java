@@ -5,13 +5,13 @@ import java.util.List;
 import com.komamitsu.addressbook.domain.Person;
 
 public interface PersonDao {
-  Person selectPersonById(long id);
+  Person selectById(long id);
 
-  List<Person> selectAllPeople();
+  List<Person> selectAll();
 
-  void insertPerson(Person person);
+  Long insert(Person person);
 
-  void updatePerson(Person person);
+  void update(Person person);
 
-  void deletePerson(Person person);
+  void delete(Person person);
 }

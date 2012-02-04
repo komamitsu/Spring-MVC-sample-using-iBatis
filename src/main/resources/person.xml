@@ -4,7 +4,7 @@
         PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         "http://ibatis.apache.org/dtd/sql-map-2.dtd">
         
-<sqlMap namespace="Person">
+<sqlMap namespace="person">
   <resultMap id="result" class="com.komamitsu.addressbook.domain.Person">
     <result property="id" column="id" columnIndex="1"/>
     <result property="name" column="name" columnIndex="2"/>
@@ -12,28 +12,31 @@
     <result property="postcode" column="postcode" columnIndex="4"/>
   </resultMap>
 
-  <select id="selectAllPeople" resultMap="result">
+  <select id="selectAll" resultMap="result">
     SELECT p.id, p.name, p.address, p.postcode
     FROM person p
   </select>
 
-  <select id="selectPersonById" resultMap="result">
+  <select id="selectById" resultMap="result">
     SELECT p.id, p.name, p.address, p.postcode
     FROM person p
     WHERE id = #id#
   </select>
 
-  <insert id="insertPerson">
+  <insert id="insert">
     INSERT INTO person (name, address, postcode) values (#name#, #address#, #postcode#)
+    <selectKey resultClass="Long" keyProperty="id">
+    	SELECT LAST_INSERT_ID() as id
+    </selectKey>
   </insert>
   
-  <update id="updatePerson">
+  <update id="update">
     UPDATE person
     SET name = #name#, address = #address#, postcode = #postcode#
     WHERE id = #id#
   </update>
 
-  <delete id="deletePerson">
+  <delete id="delete">
     DELETE FROM person WHERE id = #id#
   </delete>
 </sqlMap>

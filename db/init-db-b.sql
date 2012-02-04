@@ -1,8 +1,5 @@
-CREATE TABLE person (
+CREATE TABLE project (
   id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(64) NOT NULL,
-  address VARCHAR(256) NOT NULL,
-  postcode VARCHAR(16) NOT NULL,
   PRIMARY KEY (id)
 );
-
